@@ -36,41 +36,17 @@ function initPolygons()
 }
 initPolygons();
 
-function onMouseMove(evt)
+function getMouseXY(evt)
 {
 	mouseX = evt.pageX - canvas.offsetLeft;
 	mouseY = evt.pageY - canvas.offsetTop;
 }
 
-function onTouchMove(evt)
+function getTouchXY(evt)
 {
 	evt.preventDefault();
 	mouseX = evt.targetTouches[0].pageX - canvas.offsetLeft;
 	mouseY = evt.targetTouches[0].pageY - canvas.offsetTop;
-}
-
-function onMouseDown(evt)
-{
-	onMouseMove(evt);
-	click = true;
-}
-
-function onTouchDown(evt)
-{
-	onTouchMove(evt);
-	click = true;
-}
-
-function onMouseUp(evt)
-{
-	onMouseMove(evt);
-	unclick = true;
-}
-
-function onTouchUp(evt)
-{
-	onTouchMove(evt);
-	unclick = true;
 }
 
 function drawJitteryLine(line, jit)
@@ -105,6 +81,25 @@ function transformLine(line, scale, theta, deltaX, deltaY)
 		 + deltaX,
 		scale * (line[4] * Math.cos(theta) + line[3] * Math.sin(theta))
 		 + deltaY
+	];
+}
+
+function untransformLine(line, scale, theta, deltaX, deltaY)
+{
+	return [
+		line[0],
+		((line[1] - deltaX) * Math.cos(theta)
+		 - (line[2] - deltaY) * Math.sin(theta))
+		 / scale,
+		((line[2] - deltaX) * Math.cos(theta)
+		 + (line[1] - deltaY) * Math.sin(theta))
+		 / scale,
+		((line[3] - deltaX) * Math.cos(theta)
+		 - (line[4] - deltaY) * Math.sin(theta))
+		 / scale,
+		((line[4] - deltaX) * Math.cos(theta)
+		 + (line[3] - deltaY) * Math.sin(theta))
+		 / scale
 	];
 }
 
@@ -224,6 +219,26 @@ class Obj
 		if (line[4] > this.bbox[3]) { this.bbox[3] = line[4]; }
 	}
 
+	recenter()
+	{
+		let midX = (this.bbox[0] + this.bbox[2]) / 2;
+		let midY = (this.bbox[1] + this.bbox[3]) / 2;
+
+		this._x     = midX;
+		this._y     = midY;
+		this._scale = 1.0;
+		this._theta = 0.0;
+
+		for (let i = 0; i < this.unitList.length; i++) {
+			this.unitList[i][1] = this.lineList[i][1] - midX;
+			this.unitList[i][2] = this.lineList[i][2] - midY;
+			this.unitList[i][3] = this.lineList[i][3] - midX;
+			this.unitList[i][4] = this.lineList[i][4] - midY;
+		}
+
+		this.recalc = true;
+	}
+
 	constructor(unitList, color, scale, theta, centerX, centerY, jit,
 		    onDraw)
 	{
@@ -306,6 +321,28 @@ class Obj
 	get grabbed() { return this._grabbed; }
 	get released() { return this._mouseUp; }
 
+	destroy()
+	{
+		var index = objList.indexOf(this);
+		if (index >= 0) { objList.splice(index, 1); }
+	}
+
+	addLine(line)
+	{
+		this.unitList.push([line[0], 0, 0, 0, 0]);
+		this.lineList.push(
+		 [line[0], line[1], line[2], line[3], line[4]]);
+		this.adjustBoundBox(line);
+		this.recenter();
+	}
+
+	absorb(obj)
+	{
+		for (let i = 0; i < obj.lineList.length; i++) {
+			this.addLine(obj.lineList[i]);
+		}
+	}
+
 	draw()
 	{
 		if (this.recalc) {
@@ -332,11 +369,9 @@ class Obj
 			this._hover = false;
 		}
 
-		if (this._grabbed) {
-			if (unclick) {
-				this._grabbed  = false;
-				this._released = true;
-			}
+		if (this._grabbed && unclick) {
+			this._grabbed  = false;
+			this._released = true;
 		}
 
 		if (this._onDraw) { this._onDraw(this); }
@@ -365,18 +400,39 @@ function drawAll()
 	unclick = false;
 }
 
-objList.push(
- new Obj(polygon[6], "rgb(255, 0, 0)", 100, 0.0, 200, 200, 1, (THIS) => {
-	 if (THIS.grabbed) {
-		 THIS.x = mouseX;
-		 THIS.y = mouseY;
-	 }
- }));
+var test
+ = new Obj(polygon[6], "rgb(255, 0, 0)", 100, 0.0, 200, 200, 1, (THIS) => {
+	   if (THIS.hover) {
+		   THIS.jit = 5;
+	   } else {
+		   THIS.jit = 1;
+	   }
+	   if (THIS.grabbed) {
+		   THIS.x = mouseX;
+		   THIS.y = mouseY;
+	   }
+   });
+test.absorb(
+ new Obj(polygon[5], "rgb(0, 255, 255)", 100, 0.0, 300, 200, 1, null));
+objList.push(test);
 
-window.addEventListener("mousemove", onMouseMove);
-window.addEventListener("mousedown", onMouseDown);
-window.addEventListener("mouseup", onMouseUp);
-window.addEventListener("touchmove", onTouchMove);
-window.addEventListener("touchstart", onTouchDown);
-window.addEventListener("touchend", onTouchUp);
+window.addEventListener("mousemove", getMouseXY);
+window.addEventListener("mousedown", (evt) => {
+	getMouseXY(evt);
+	click = true;
+});
+window.addEventListener("mouseup", (evt) => {
+	getMouseXY(evt);
+	unclick = true;
+});
+window.addEventListener("touchmove", getTouchXY);
+window.addEventListener("touchstart", (evt) => {
+	getTouchXY(evt);
+	click = true;
+});
+window.addEventListener("touchend", (evt) => {
+	unclick = true;
+	mouseX  = -1;
+	mouseY  = -1;
+});
 setInterval(drawAll, 16.7)
