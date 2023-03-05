@@ -1,6 +1,6 @@
 var canvas  = document.getElementById("Canvas");
 var ctx     = canvas.getContext("2d");
-var touches = [[15, 200], [350, 104]];
+var touches = [];
 
 function drawAll()
 {
@@ -17,9 +17,12 @@ function drawAll()
 }
 
 window.addEventListener("touchmove", (evt) => {
+    
 });
 window.addEventListener("touchstart", (evt) => {
+    
 });
 window.addEventListener("touchend", (evt) => {
+    
 });
 setInterval(drawAll, 16.7);
