@@ -1,7 +1,6 @@
-var canvas         = document.getElementById("Canvas");
-var ctx            = canvas.getContext("2d");
-var touchesStarted = 0;
-var touchesEnded   = 0;
+var canvas  = document.getElementById("Canvas");
+var ctx     = canvas.getContext("2d");
+var touches = [[15, 200], [350, 104]];
 
 function drawAll()
 {
@@ -10,15 +9,17 @@ function drawAll()
 
     ctx.fillStyle = "rgb(255, 255, 255)";
     ctx.font = "20px sans-serif";
-    ctx.fillText("Touches Started: " + touchesStarted, 0, 30);
-    ctx.fillText("Touches Ended: " + touchesEnded, 0, 60);
+    if (touches) {
+        for (let i = 0; i < touches.length; i++) {
+            ctx.fillText("Touch " + i + ": " + touches[i][0] + ", " + touches[i][1], 0, i * 30 + 30);
+        }
+    }
 }
 
-window.addEventListener("touchmove", (evt) => {});
+window.addEventListener("touchmove", (evt) => {
+});
 window.addEventListener("touchstart", (evt) => {
-    touchesStarted++;
 });
 window.addEventListener("touchend", (evt) => {
-    touchesEnded++;
 });
 setInterval(drawAll, 16.7);
