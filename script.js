@@ -12,8 +12,8 @@ function drawAll()
     ctx.lineTo(100, 100);
     ctx.stroke();
 
-    ctx.font = "bold 48px serif";
-    ctx.strokeText("Hello world", 50, 100);
+    ctx.font = "48px sans-serif";
+    ctx.strokeText("Hello world", 0, 100);
 }
 
 setInterval(drawAll, 16.7);
