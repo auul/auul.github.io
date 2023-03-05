@@ -6,9 +6,9 @@ function drawAll()
     ctx.fillStyle = "rgb(0, 0, 0)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = "rgb(255, 255, 255)";
-    ctx.font = "16px sans-serif";
-    ctx.fillText("Hello, World!", 0, 0);
+    ctx.strokeStyle = "rgb(255, 255, 255)";
+    ctx.font = "bold 48px serif";
+    ctx.strokeText("Hello world", 50, 100);
 }
 
 setInterval(drawAll, 16.7);
