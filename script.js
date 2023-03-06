@@ -37,7 +37,7 @@ function drawAll()
 	ctx.strokeStyle = "rgb(255, 255, 255)";
 	ctx.beginPath();
 	ctx.moveTo(100, 100);
-	ctx.LineTo(200, 200);
+	ctx.lineTo(200, 200);
 	ctx.stroke();
 
 	ctx.fillStyle = "rgb(255, 255, 255)";
