@@ -33,6 +33,12 @@ function drawAll()
 {
 	ctx.fillStyle = "rgb(0, 0, 0)";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	
+	ctx.strokeStyle = "rgb(255, 255, 255)";
+	ctx.beginPath();
+	ctx.moveTo(100, 100);
+	ctx.LineTo(200, 200);
+	ctx.stroke();
 
 	ctx.fillStyle = "rgb(255, 255, 255)";
 	ctx.font      = "16px sans-serif";
