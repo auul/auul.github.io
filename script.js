@@ -79,6 +79,13 @@ class Obj
 		this._y      = y;
 		this._onDraw = onDraw;
 
+		this._hoverOn  = false;
+		this._hoverOff = false;
+		this._hovering = false;
+		this._grabOn   = false;
+		this._grabOff  = false;
+		this._grabbing = false;
+
 		for (let i = 0; i < unitList.length; i++) {
 			this.unitList[i] = [
 				unitList[i][0], unitList[i][1], unitList[i][2],
