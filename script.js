@@ -53,7 +53,7 @@ function drawAll()
 	}
 }
 
-window.addEventListener("touchstart", (evt) => getTouches);
-window.addEventListener("touchend", (evt) => getTouches);
-window.addEventListener("touchmove", (evt) => getTouches);
+window.addEventListener("touchstart", getTouches);
+window.addEventListener("touchend", getTouches);
+window.addEventListener("touchmove", getTouches);
 setInterval(drawAll, 16.7);
