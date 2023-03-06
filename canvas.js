@@ -6,6 +6,7 @@ var clickOn      = false;
 var clickOff     = false;
 var clicking     = false;
 const mouseCoord = [0, 0];
+const zoomMouse  = [0, 0];
 
 const camBounds = [0, 0, 640, 640];
 var minCamX     = 0;
@@ -173,6 +174,9 @@ function updateCamera()
 		camOffLeft = (canvas.width / 2) - (camX * zoom);
 		camOffTop  = (canvas.height / 2) - (camY * zoom);
 	}
+
+	zoomMouse[0] = (mouseCoord[0] - camOffLeft) / zoom;
+	zoomMouse[1] = (mouseCoord[1] - camOffTop) / zoom;
 }
 
 function cleanupFlags()
