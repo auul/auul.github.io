@@ -132,8 +132,7 @@ class Obj
 					this._hoverOff = true;
 					this._hovering = false;
 				}
-			} else if (mouseActive &&
-			           zoomMouse[0] > this.bbox[0] &&
+			} else if (zoomMouse[0] > this.bbox[0] &&
 			           zoomMouse[0] < this.bbox[2] &&
 			           zoomMouse[1] > this.bbox[1] &&
 			           zoomMouse[1] < this.bbox[3]) {
@@ -153,8 +152,7 @@ class Obj
 					this._hoverOff = true;
 					this._hovering = false;
 				}
-			} else if (mouseActive &&
-			           mouseCoord[0] > this.bbox[0] &&
+			} else if (mouseCoord[0] > this.bbox[0] &&
 			           mouseCoord[0] < this.bbox[2] &&
 			           mouseCoord[1] > this.bbox[1] &&
 			           mouseCoord[1] < this.bbox[3]) {
@@ -232,7 +230,7 @@ function drawAll()
 
 	ctx.fillStyle = "rgb(255, 255, 255)";
 	ctx.font      = "16px sans-serif";
-	ctx.fillText("5", 0, 20);
+	ctx.fillText("6", 0, 20);
 
 	cleanupFlags();
 }
