@@ -190,6 +190,7 @@ function drawAll()
 
 	ctx.fillStyle = "rgb(255, 255, 255)";
 	ctx.font      = "16px sans-serif";
+	ctx.fillText("2", 0, 20);
 
 	cleanupFlags();
 }
