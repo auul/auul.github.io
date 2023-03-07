@@ -125,18 +125,18 @@ class Obj
 			}
 
 			if (this._hovering) {
-				if (zoomedMouse[0] < this.bbox[0] ||
-				    zoomedMouse[1] < this.bbox[1] ||
-				    zoomedMouse[0] > this.bbox[2] ||
-				    zoomedMouse[1] > this.bbox[3]) {
+				if (zoomMouse[0] < this.bbox[0] ||
+				    zoomMouse[1] < this.bbox[1] ||
+				    zoomMouse[0] > this.bbox[2] ||
+				    zoomMouse[1] > this.bbox[3]) {
 					this._hoverOff = true;
 					this._hovering = false;
 				}
 			} else if (mouseActive &&
-			           zoomedMouse[0] > this.bbox[0] &&
-			           zoomedMouse[0] < this.bbox[2] &&
-			           zoomedMouse[1] > this.bbox[1] &&
-			           zoomedMouse[1] < this.bbox[3]) {
+			           zoomMouse[0] > this.bbox[0] &&
+			           zoomMouse[0] < this.bbox[2] &&
+			           zoomMouse[1] > this.bbox[1] &&
+			           zoomMouse[1] < this.bbox[3]) {
 				this._hoverOn = true;
 				this._hovering = true;
 			}
@@ -146,18 +146,18 @@ class Obj
 			}
 
 			if (this._hovering) {
-				if (mouseCoords[0] < this.bbox[0] ||
-				    mouseCoords[1] < this.bbox[1] ||
-				    mouseCoords[0] > this.bbox[2] ||
-				    mouseCoords[1] > this.bbox[3]) {
+				if (mouseCoord[0] < this.bbox[0] ||
+				    mouseCoord[1] < this.bbox[1] ||
+				    mouseCoord[0] > this.bbox[2] ||
+				    mouseCoord[1] > this.bbox[3]) {
 					this._hoverOff = true;
 					this._hovering = false;
 				}
 			} else if (mouseActive &&
-			           mouseCoords[0] > this.bbox[0] &&
-			           mouseCoords[0] < this.bbox[2] &&
-			           mouseCoords[1] > this.bbox[1] &&
-			           mouseCoords[1] < this.bbox[3]) {
+			           mouseCoord[0] > this.bbox[0] &&
+			           mouseCoord[0] < this.bbox[2] &&
+			           mouseCoord[1] > this.bbox[1] &&
+			           mouseCoord[1] < this.bbox[3]) {
 				this._hoverOn = true;
 				this._hovering = true;
 			}
@@ -224,7 +224,7 @@ function drawAll()
 
 	ctx.fillStyle = "rgb(255, 255, 255)";
 	ctx.font      = "16px sans-serif";
-	ctx.fillText("3", 0, 20);
+	ctx.fillText("4", 0, 20);
 
 	cleanupFlags();
 }
