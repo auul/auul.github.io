@@ -2,8 +2,25 @@ const objList = [];
 
 class Obj
 {
+	adjustBounds(line)
+	{
+		if (line[1] < this.bbox[0]) { this.bbox[0] = line[1]; }
+		if (line[1] > this.bbox[2]) { this.bbox[2] = line[1]; }
+		if (line[2] < this.bbox[1]) { this.bbox[1] = line[2]; }
+		if (line[2] > this.bbox[3]) { this.bbox[3] = line[2]; }
+		if (line[3] < this.bbox[0]) { this.bbox[0] = line[3]; }
+		if (line[3] > this.bbox[2]) { this.bbox[2] = line[3]; }
+		if (line[4] < this.bbox[1]) { this.bbox[1] = line[4]; }
+		if (line[4] > this.bbox[3]) { this.bbox[3] = line[4]; }
+	}
+
 	recalcLines()
 	{
+		this.bbox[0] = canvas.width;
+		this.bbox[1] = canvas.height;
+		this.bbox[2] = 0;
+		this.bbox[3] = 0;
+
 		for (let i = 0; i < this.unitList.length; i++) {
 			if (this.unitList[i][0]) {
 				this.lineList[i] = [
@@ -70,6 +87,7 @@ class Obj
 		this.isZoomable = isZoomable;
 		this.unitList   = new Array(unitList.length);
 		this.lineList   = new Array(unitList.length);
+		this.bbox       = [canvas.width, canvas.height, 0, 0];
 		this.recalc     = true;
 
 		this._color  = color;
