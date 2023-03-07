@@ -198,6 +198,10 @@ class Obj
 	}
 	get onDraw() { return this._onDraw; }
 	set onDraw(func) { this._onDraw = func; }
+
+	get hoverOn() { return this._hoverOn; }
+	get hoverOff() { return this._hoverOff; }
+	get hovering() { return this._hovering; }
 }
 
 objList.push(new Obj(
@@ -208,8 +212,12 @@ objList.push(new Obj(
 	 [null, minCamX, maxCamY, minCamX, minCamY]
  ],
  "rgb(255, 255, 255)", 1, 0, 0, true, null));
-objList.push(new Obj(polygon[5], "rgb(0, 255, 0)", 100, 0, 0, true,
-		     (THIS) => { THIS.theta += 0.1; }));
+objList.push(new Obj(polygon[5], "rgb(0, 255, 0)", 100, 100, 100, true,
+		     (THIS) => {
+	if (THIS.hovering) {
+		THIS.theta += 0.05;
+	}
+}));
 
 function drawAll()
 {
