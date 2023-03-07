@@ -232,7 +232,7 @@ function drawAll()
 
 	ctx.fillStyle = "rgb(255, 255, 255)";
 	ctx.font      = "16px sans-serif";
-	ctx.fillText("4", 0, 20);
+	ctx.fillText("5", 0, 20);
 
 	cleanupFlags();
 }
