@@ -1,6 +1,7 @@
 const canvas = document.getElementById("Canvas");
 const ctx    = canvas.getContext("2d");
 
+var controlMode  = null;
 var mouseActive  = false;
 var clickOn      = false;
 var clickOff     = false;
@@ -43,6 +44,8 @@ function getDistance(fromX, fromY, toX, toY)
 
 function incTouch(evt)
 {
+	controlMode = "incTouch";
+
 	touchCount++;
 	if (touchCount == 1) {
 		mouseActive   = true;
@@ -71,6 +74,8 @@ function incTouch(evt)
 
 function decTouch(evt)
 {
+	controlMode = "decTouch";
+
 	touchCount--;
 	if (touchCount == 1) {
 		mouseActive = true;
@@ -83,6 +88,8 @@ function decTouch(evt)
 
 function moveTouch(evt)
 {
+	controlMode = "moveTouch";
+
 	if (pinching) {
 		pinch[0] = evt.targetTouches[0].pageX - canvas.offsetLeft;
 		pinch[1] = evt.targetTouches[0].pageY - canvas.offsetTop;
@@ -96,6 +103,8 @@ function moveTouch(evt)
 
 function moveMouse(evt)
 {
+	controlMode = "moveMouse";
+
 	if (touchCount == 0) {
 		mouseActive   = true;
 		mouseCoord[0] = evt.pageX - canvas.offsetLeft;
@@ -105,6 +114,8 @@ function moveMouse(evt)
 
 function mouseDown(evt)
 {
+	controlMode = "mouseDown";
+
 	if (touchCount == 0) {
 		clickOn       = true;
 		clicking      = true;
@@ -115,6 +126,8 @@ function mouseDown(evt)
 
 function mouseUp(evt)
 {
+	controlMode = "mouseUp";
+
 	if (touchCount == 0) {
 		clickOff      = true;
 		clicking      = true;
@@ -183,7 +196,7 @@ function cleanupFlags()
 {
 	clickOn = false;
 	if (clickOff) {
-		clicking = flse;
+		clicking = false;
 		clickOff = false;
 	}
 }
